@@ -1,0 +1,12 @@
+#page-content-wrapper {
+    background-color: gray;
+}
+
+#chat {
+    border: 1px solid black;
+}
+
+#game-pane {
+    border: 1px solid black;
+    /*height: 80%;*/
+}
