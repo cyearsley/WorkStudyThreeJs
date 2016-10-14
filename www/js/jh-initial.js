@@ -6,28 +6,26 @@ var WIDTH = $('#game-board').width();
 var HEIGHT = $('#game-board').height();
 
 var SPEED = 0.01;
-
 function init() {
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000);
+    scene.background = new THREE.Color('white');
 
     initMesh();
     initCamera();
     initLights();
     initRenderer();
-
     $('#game-board').append(renderer.domElement);
 }
 
 function initCamera() {
-    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 10);
-    camera.position.set(0, 4, 0);
+    camera = new THREE.PerspectiveCamera(70, WIDTH / HEIGHT, 1, 30);
+    camera.position.set(0, 1, 15);
     camera.lookAt(scene.position);
+
 }
 
-
 function initRenderer() {
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({ antialias: true, alphaTest: true });
     renderer.setSize(WIDTH, HEIGHT);
 }
 
@@ -37,13 +35,14 @@ function initLights() {
 }
 
 function initMesh() {
-  var radius = 50;
-  var segments = 16;
-  var rings = 16;
-  var sphereMaterial = new THREE.MeshLambertMaterial({color: 0xFF0000});
-  var sphere = new THREE.Mesh(new THREE.SphereGeometry(radius, segments,rings),sphereMaterial);
+  var loader = new THREE.JSONLoader();
+  loader.load('./tree2.json', function(geometry, materials) {
+    var mesh_tree = new THREE.Mesh(geometry, new THREE.MeshFaceMaterial(materials));
+    mesh_tree.position.set(0,.175,0);
+    mesh_tree.scale.x = mesh_tree.scale.y = mesh_tree.scale.z = 1.0;
+    scene.add(mesh_tree);
 
-  scene.add(sphere);
+  });
 
 }
 
